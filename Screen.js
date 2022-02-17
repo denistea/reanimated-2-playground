@@ -3,11 +3,14 @@ import Animated, {
   withTiming,
   useAnimatedStyle,
   Easing,
+  SlideInDown,
+  SlideOutDown,
 } from 'react-native-reanimated';
-import {View, Button} from 'react-native';
-import React from 'react';
+import {View, Button, Text} from 'react-native';
+import React, {useState} from 'react';
 
 export default function AnimatedStyleUpdateExample(props) {
+  const [isVisible, setVisible] = useState(true);
   const randomWidth = useSharedValue(10);
 
   const config = {
@@ -37,8 +40,14 @@ export default function AnimatedStyleUpdateExample(props) {
         title="toggle"
         onPress={() => {
           randomWidth.value = Math.random() * 350;
+          setVisible((v) => !v);
         }}
       />
+      {isVisible && (
+        <Animated.View entering={SlideInDown} exiting={SlideOutDown}>
+          <Text>Hello World!</Text>
+        </Animated.View>
+      )}
     </View>
   );
 }

@@ -1,12 +1,31 @@
-import {AppRegistry, Platform} from 'react-native';
-import {name as appName} from './app.json';
-import App from './Screen';
+import React from 'react';
+import Screen from './Screen';
+import {NavigationContainer} from '@react-navigation/native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import SearchIcon from './assets/search.svg';
 
-AppRegistry.registerComponent(appName, () => App);
+const Tab = createBottomTabNavigator();
 
-if (Platform.OS === 'web') {
-  const rootTag = document.getElementById('root');
-  AppRegistry.runApplication(appName, {rootTag});
+function Tabs() {
+  return (
+    <Tab.Navigator>
+      <Tab.Screen
+        name="Home"
+        component={Screen}
+        options={{
+          tabBarIcon: ({focused}) => (
+            <SearchIcon height={25} width={25} stroke="black" />
+          ),
+        }}
+      />
+    </Tab.Navigator>
+  );
 }
 
-export default App;
+export default function Root() {
+  return (
+    <NavigationContainer>
+      <Tabs />
+    </NavigationContainer>
+  );
+}
